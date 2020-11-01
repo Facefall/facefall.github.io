@@ -413,3 +413,4 @@ NexT.utils = {
     return intersectionObserver;
   }
 };
+

@@ -1188,7 +1188,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #3dff4f;
+  background: #0dff01;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2231,6 +2231,34 @@ ul.breadcrumb li + li:last-child {
 }
 .tag-cloud a:hover {
   color: var(--link-hover-color) !important;
+}
+#music-box {
+  position: absolute;
+  top: 0;
+  right: -80px;
+  width: 80px;
+  height: 80px;
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15) !important;
+  transition: all 0.4s ease-out;
+}
+#music-pic {
+  width: inherit;
+  height: inherit;
+  z-index: 1;
+  filter: brightness(100%);
+  transition: all 0.2s ease;
+}
+#music-pic:hover {
+  filter: brightness(50%);
+}
+#music-box:hover:before {
+  border: 11px solid transparent;
+  border-left: 17px solid #fff;
+  content: "";
+  position: absolute;
+  left: 32px;
+  top: 29px;
+  z-index: 1;
 }
 .header {
   margin: 0 auto;

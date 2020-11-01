@@ -20,17 +20,19 @@
     var CONFIG = {"hostname":"facefall.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="article">
-<meta property="og:title" content="test">
-<meta property="og:url" content="https://facefall.github.io/2020/10/24/test/index.html">
+  <meta name="description" content="JavaScript Array method : reduce612345678910Array.prototype.fakeReduce &#x3D; function(callback,initialValue)&amp;#123;    let array &#x3D; this;    let TotalNum &#x3D; initialValue ? initialValue : array">
+<meta property="og:type" content="article">
+<meta property="og:title" content="An simple reduce Implementation！">
+<meta property="og:url" content="https://facefall.github.io/2020/08/29/reduce/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="JavaScript Array method : reduce612345678910Array.prototype.fakeReduce &#x3D; function(callback,initialValue)&amp;#123;    let array &#x3D; this;    let TotalNum &#x3D; initialValue ? initialValue : array">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-10-24T07:09:53.000Z">
-<meta property="article:modified_time" content="2020-10-24T07:09:53.466Z">
+<meta property="article:published_time" content="2020-08-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-11-01T02:18:53.335Z">
 <meta property="article:author" content="CJY">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://facefall.github.io/2020/10/24/test/">
+<link rel="canonical" href="https://facefall.github.io/2020/08/29/reduce/">
 
 
 <script id="page-configurations">
@@ -43,7 +45,7 @@
   };
 </script>
 
-  <title>test | Hexo</title>
+  <title>An simple reduce Implementation！ | Hexo</title>
   
 
 
@@ -153,7 +155,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://facefall.github.io/2020/10/24/test/">
+    <link itemprop="mainEntityOfPage" href="https://facefall.github.io/2020/08/29/reduce/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -166,7 +168,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          test
+          An simple reduce Implementation！
         </h1>
 
         <div class="post-meta">
@@ -176,7 +178,23 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-10-24 15:09:53" itemprop="dateCreated datePublished" datetime="2020-10-24T15:09:53+08:00">2020-10-24</time>
+              <time title="Created: 2020-08-29 00:00:00" itemprop="dateCreated datePublished" datetime="2020-08-29T00:00:00+08:00">2020-08-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-11-01 10:18:53" itemprop="dateModified" datetime="2020-11-01T10:18:53+08:00">2020-11-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/reduce-JavaScript-Array/" itemprop="url" rel="index"><span itemprop="name">reduce JavaScript Array</span></a>
+                </span>
             </span>
 
           
@@ -190,7 +208,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h2 id="JavaScript-Array-method-reduce"><a href="#JavaScript-Array-method-reduce" class="headerlink" title="JavaScript Array method : reduce"></a>JavaScript Array method : reduce</h2><figure class="highlight plain"><figcaption><span>6</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Array.prototype.fakeReduce &#x3D; function(callback,initialValue)&#123;</span><br><span class="line">    let array &#x3D; this;</span><br><span class="line">    let TotalNum &#x3D; initialValue ? initialValue : array[0];</span><br><span class="line">    for (let index &#x3D; 1; index &lt; array.length; index++) &#123;</span><br><span class="line">        const num &#x3D; array[index];</span><br><span class="line">        TotalNum &#x3D; callback(TotalNum,num,index,array);</span><br><span class="line">    &#125;</span><br><span class="line">    return TotalNum;</span><br><span class="line">&#125;</span><br><span class="line">[1,2,3].fakeReduce();&#x2F;&#x2F;6</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -205,12 +223,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/09/03/algorithm-BinarySearch/" rel="prev" title="Algorithm beginner - 2.BinarySearch">
-      <i class="fa fa-chevron-left"></i> Algorithm beginner - 2.BinarySearch
+    <a href="/2020/08/27/Git/" rel="prev" title="An simple Git Implementation！">
+      <i class="fa fa-chevron-left"></i> An simple Git Implementation！
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/10/24/nihao/" rel="next" title="nihao">
-      nihao <i class="fa fa-chevron-right"></i>
+    <a href="/2020/08/29/LinkList/" rel="next" title="Data Structure - LinkList Implementation！">
+      Data Structure - LinkList Implementation！ <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -270,6 +288,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript-Array-method-reduce"><span class="nav-number">1.</span> <span class="nav-text">JavaScript Array method : reduce</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
