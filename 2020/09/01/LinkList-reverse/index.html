@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"facefall.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="LinkList structure612345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273export default class LinkList &amp;#123;    cons">
+  <meta name="description" content="LinkList structure123456export default class LinkList &amp;#123;    constructor()&amp;#123;        this.head &#x3D; null;        this.tail &#x3D; null;    &amp;#125;&amp;#125;  链表逆转完成链表逆转总共需要三个指针. 核心思想： prev -&gt; currentNode">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linklist - reverse 逆转">
 <meta property="og:url" content="https://facefall.github.io/2020/09/01/LinkList-reverse/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="LinkList structure612345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273export default class LinkList &amp;#123;    cons">
+<meta property="og:description" content="LinkList structure123456export default class LinkList &amp;#123;    constructor()&amp;#123;        this.head &#x3D; null;        this.tail &#x3D; null;    &amp;#125;&amp;#125;  链表逆转完成链表逆转总共需要三个指针. 核心思想： prev -&gt; currentNode">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-08-31T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-11-01T02:19:56.308Z">
+<meta property="article:modified_time" content="2020-11-01T02:24:03.247Z">
 <meta property="article:author" content="CJY">
 <meta name="twitter:card" content="summary">
 
@@ -185,7 +185,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-01 10:19:56" itemprop="dateModified" datetime="2020-11-01T10:19:56+08:00">2020-11-01</time>
+                <time title="Modified: 2020-11-01 10:24:03" itemprop="dateModified" datetime="2020-11-01T10:24:03+08:00">2020-11-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -208,7 +208,40 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="LinkList-structure"><a href="#LinkList-structure" class="headerlink" title="LinkList structure"></a>LinkList structure</h3><figure class="highlight plain"><figcaption><span>6</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">export default class LinkList &#123;</span><br><span class="line">    constructor()&#123;</span><br><span class="line">        this.head &#x3D; null;</span><br><span class="line">        this.tail &#x3D; null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endhighlight %&#125;</span><br><span class="line"></span><br><span class="line">### 链表逆转</span><br><span class="line">完成链表逆转总共需要三个指针.</span><br><span class="line"></span><br><span class="line">核心思想：</span><br><span class="line"></span><br><span class="line">prev -&gt; currentNode -&gt; nextNode</span><br><span class="line"></span><br><span class="line">在逆转之前，先将</span><br><span class="line"></span><br><span class="line">&lt;code&gt;nextNode &#x3D; currentNode.next;&lt;&#x2F;code&gt;</span><br><span class="line"></span><br><span class="line">确保能拿到链表的下一个节点。</span><br><span class="line"></span><br><span class="line">之后将节点指向逆转：</span><br><span class="line"></span><br><span class="line">&lt;code&gt;currentNode.next &#x3D; prev;&lt;&#x2F;code&gt;</span><br><span class="line"></span><br><span class="line">于是：</span><br><span class="line">&lt;pre&gt;</span><br><span class="line">node1 &lt;- node2        node3  -&gt; node4 -&gt; node5 -&gt; node6</span><br><span class="line">prev  &lt;- currentNode  nextNode</span><br><span class="line">&lt;&#x2F;pre&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">然后三个节点依次向后移动，重复上述过程，</span><br><span class="line"></span><br><span class="line">①：current赋值nextNode，</span><br><span class="line"></span><br><span class="line">②：current指向改为prev。</span><br><span class="line"></span><br><span class="line">&lt;pre&gt;</span><br><span class="line">node1 &lt;- node2 &lt;- node3       node4 -&gt; node5 -&gt; node6</span><br><span class="line">         prev  &lt;- currentNode nextNode</span><br><span class="line">&lt;&#x2F;pre&gt;</span><br><span class="line"></span><br><span class="line">直到currentNode.next为空，就不给nextNode赋值了，直接跳出循环。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">将节点指向逆转之后需要注意</span><br><span class="line">链表自身属性也要调整。</span><br><span class="line"></span><br><span class="line">逆转后尾节点：是逆转前的头节点</span><br><span class="line"></span><br><span class="line">&lt;code&gt;this.tail &#x3D; this.head;&lt;&#x2F;code&gt;</span><br><span class="line"></span><br><span class="line">逆转后的头节点：当前的currentNode</span><br><span class="line"></span><br><span class="line">&lt;code&gt;this.head &#x3D; currentNode;&lt;&#x2F;code&gt;</span><br><span class="line"></span><br><span class="line">完整代码</span><br><span class="line">&#123;% highlight ruby linenos %&#125;</span><br><span class="line">reverse_()&#123;</span><br><span class="line">        let currentNode &#x3D; this.head;</span><br><span class="line">        let prevNode &#x3D; null,nextNode &#x3D; null;</span><br><span class="line">        while(currentNode)&#123;</span><br><span class="line">            nextNode &#x3D; currentNode.next;</span><br><span class="line">            currentNode.next &#x3D; prevNode;</span><br><span class="line">            prevNode &#x3D; currentNode;</span><br><span class="line">            currentNode &#x3D; nextNode;</span><br><span class="line">        &#125;</span><br><span class="line">        this.tail &#x3D; this.head;</span><br><span class="line">        this.head &#x3D; preNode;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+        <h3 id="LinkList-structure"><a href="#LinkList-structure" class="headerlink" title="LinkList structure"></a>LinkList structure</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">LinkList</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.head = <span class="literal">null</span>;</span><br><span class="line">        <span class="built_in">this</span>.tail = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="链表逆转"><a href="#链表逆转" class="headerlink" title="链表逆转"></a>链表逆转</h3><p>完成链表逆转总共需要三个指针.</p>
+<p>核心思想：</p>
+<p>prev -&gt; currentNode -&gt; nextNode</p>
+<p>在逆转之前，先将</p>
+<p><code>nextNode = currentNode.next;</code></p>
+<p>确保能拿到链表的下一个节点。</p>
+<p>之后将节点指向逆转：</p>
+<p><code>currentNode.next = prev;</code></p>
+<p>于是：</p>
+<pre>
+node1 <- node2        node3  -> node4 -> node5 -> node6
+prev  <- currentNode  nextNode
+</pre>
+
+
+<p>然后三个节点依次向后移动，重复上述过程，</p>
+<p>①：current赋值nextNode，</p>
+<p>②：current指向改为prev。</p>
+<pre>
+node1 <- node2 <- node3       node4 -> node5 -> node6
+         prev  <- currentNode nextNode
+</pre>
+
+<p>直到currentNode.next为空，就不给nextNode赋值了，直接跳出循环。</p>
+<hr>
+<p>将节点指向逆转之后需要注意<br>链表自身属性也要调整。</p>
+<p>逆转后尾节点：是逆转前的头节点</p>
+<p><code>this.tail = this.head;</code></p>
+<p>逆转后的头节点：当前的currentNode</p>
+<p><code>this.head = currentNode;</code></p>
+<p>完整代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="title">reverse</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> currentNode = <span class="built_in">this</span>.head;</span><br><span class="line">        <span class="keyword">let</span> prevNode = <span class="literal">null</span>,nextNode = <span class="literal">null</span>;</span><br><span class="line">        <span class="function"><span class="title">while</span>(<span class="params">currentNode</span>)</span>&#123;</span><br><span class="line">            nextNode = currentNode.next;</span><br><span class="line">            currentNode.next = prevNode;</span><br><span class="line">            prevNode = currentNode;</span><br><span class="line">            currentNode = nextNode;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">this</span>.tail = <span class="built_in">this</span>.head;</span><br><span class="line">        <span class="built_in">this</span>.head = preNode;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -288,7 +321,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#LinkList-structure"><span class="nav-number">1.</span> <span class="nav-text">LinkList structure</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#LinkList-structure"><span class="nav-number">1.</span> <span class="nav-text">LinkList structure</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E8%A1%A8%E9%80%86%E8%BD%AC"><span class="nav-number">2.</span> <span class="nav-text">链表逆转</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -302,7 +335,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

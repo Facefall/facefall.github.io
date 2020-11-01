@@ -1,3 +1,5 @@
+/* global CONFIG */
+
 document.addEventListener('DOMContentLoaded', function (){
   'use strict';
   console.log(123)
@@ -26,9 +28,12 @@ document.addEventListener('DOMContentLoaded', function (){
         songData = songData["data"][0];
         var musicUrl = songData["url"];
         var picUrl = randomSong["al"]["picUrl"];
-        var audio = Document.createElement("AUDIO");
+        var audio = document.createElement("AUDIO");
+
         var musicBox = document.querySelector("#music-box");
+
         var musicPic = document.querySelector("#music-pic");
+
 
 
         audio.setAttribute("src", musicUrl);
