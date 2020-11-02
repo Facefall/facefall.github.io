@@ -1,4 +1,6 @@
- 'use strict';
+
+  'use strict';
+
 let time1 = new Date();
 
 (function (){
@@ -63,35 +65,34 @@ let time1 = new Date();
 
 window.addEventListener("load", ()=> {
   let time2 = new Date();
-  const endLoading = async (time = 0) => {
-    {
-      let loadingBackground = document.querySelector(".loadingBackground");
-      let load = document.querySelector(".load");
-      let body = document.querySelector("body");
-      let style = document.querySelector(".loading-style")
-      let head = document.querySelector("head");
-      console.log(3);
-      await new Promise(resolve => {
-        setTimeout(()=>{
-          load.style.opacity = 0;
-          loadingBackground.style.opacity = 0;
-        },time);
-      }).then((resolve)=>{
-        body.removeChild(load)
-        body.removeChild(loadingBackground)
-        head.removeChild(style)
-        console.log(2);
-      })
-    }
+  let loadingBackground = document.querySelector(".loadingBackground");
+  let load = document.querySelector(".load");
+  let body = document.querySelector("body");
+  let style = document.querySelector(".loading-style")
+  let head = document.querySelector("head");
+  const removeNode = () => {
+    body.removeChild(load)
+    body.removeChild(loadingBackground)
+    head.removeChild(style)
+    console.log(2);
+  }
+  const endLoading = () => {
+    load.style.opacity = 0;
+    loadingBackground.style.opacity = 0;
+    body.style.cssText = '';
+    console.log(6);
   }
 
-  if(time2 - time1 > 3000){
-    console.log(time2 - time1);
+  if(time2 - time1 > 2000){
     endLoading();
+    removeNode()
   }
   else{
-    endLoading(1000);
+    setTimeout(()=>{
+      endLoading();
+      setTimeout(removeNode,200)
+    }, 200)
   }
-  time1 = null;
+  // time1 = null;
 })
 
