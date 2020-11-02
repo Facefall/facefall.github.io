@@ -986,7 +986,7 @@ pre .javascript .function {
   padding: 0 10px;
 }
 .headband {
-  background: #222;
+  background-color: transparent;
   height: 3px;
 }
 .site-meta {
@@ -1188,7 +1188,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #d2b1cf;
+  background: #4e867d;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2237,8 +2237,7 @@ ul.breadcrumb li + li:last-child {
   top: 0;
   right: -80px;
   width: 80px;
-  height: 80px;
-  border-top: 3px solid transparent;
+  height: 73px;
   box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15) !important;
   transition: all 0.4s ease-out;
 }

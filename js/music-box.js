@@ -1,8 +1,5 @@
-/* global CONFIG */
-
 document.addEventListener('DOMContentLoaded', function (){
   'use strict';
-  console.log(123)
   var randomSong;
   var playlistUrl = `http://47.101.33.84:3000/playlist/detail?id=4897254242`;
   fetch(playlistUrl).
@@ -11,12 +8,12 @@ document.addEventListener('DOMContentLoaded', function (){
   }).
   then(response => {
     var getRandomSongUrl = function (){
-      var playlist = response["playlist"]["tracks"];
-      var len = playlist.length;
-      var randomIndex = Math.floor( Math.random() * len);
-      randomSong = playlist[randomIndex];
-      var randomId = randomSong["id"];;
-      return `http://47.101.33.84:3000/song/url?id=${randomId}`;
+        var playlist = response["playlist"]["tracks"];
+        var len = playlist.length;
+        var randomIndex = Math.floor( Math.random() * len);
+        randomSong = playlist[randomIndex];
+        var randomId = randomSong["id"];
+        return `http://47.101.33.84:3000/song/url?id=${randomId}`;
     }
     var songUrl = getRandomSongUrl()
     fetch(songUrl).
@@ -59,3 +56,5 @@ document.addEventListener('DOMContentLoaded', function (){
 
   })
 })
+
+
