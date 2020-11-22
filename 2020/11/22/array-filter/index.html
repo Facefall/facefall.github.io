@@ -20,15 +20,20 @@
     var CONFIG = {"hostname":"facefall.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://facefall.github.io/categories/process-OS/index.html">
+  <meta name="description" content="12345678910111213Array.prototype.myFilter &#x3D; function (callback, thisArgs)&amp;#123;     let array &#x3D; this;    const len &#x3D; array.length;    let ans &#x3D; new Array(len);    callback.bind(thisArgs);    for(let i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="array-filter">
+<meta property="og:url" content="https://facefall.github.io/2020/11/22/array-filter/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="12345678910111213Array.prototype.myFilter &#x3D; function (callback, thisArgs)&amp;#123;     let array &#x3D; this;    const len &#x3D; array.length;    let ans &#x3D; new Array(len);    callback.bind(thisArgs);    for(let i">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-11-22T02:30:07.000Z">
+<meta property="article:modified_time" content="2020-11-22T02:36:08.261Z">
 <meta property="article:author" content="CJY">
+<meta property="article:tag" content="JavaScript Array">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://facefall.github.io/categories/process-OS/">
+<link rel="canonical" href="https://facefall.github.io/2020/11/22/array-filter/">
 
 
 <script id="page-configurations">
@@ -36,12 +41,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>Category: process OS | Hexo</title>
+  <title>array-filter | Hexo</title>
   
 
 
@@ -144,51 +149,84 @@
         <div class="content-wrap">
           
 
-          <div class="content category">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">process OS
-          <small>Category</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://facefall.github.io/2020/11/22/array-filter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="CJY">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          array-filter
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-11-22 10:30:07 / Modified: 10:36:08" itemprop="dateCreated datePublished" datetime="2020-11-22T10:30:07+08:00">2020-11-22</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2020</span>
+        <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.myFilter = <span class="function"><span class="keyword">function</span> (<span class="params">callback, thisArgs</span>)</span>&#123; </span><br><span class="line">    <span class="keyword">let</span> array = <span class="built_in">this</span>;</span><br><span class="line">    <span class="keyword">const</span> len = array.length;</span><br><span class="line">    <span class="keyword">let</span> ans = <span class="keyword">new</span> <span class="built_in">Array</span>(len);</span><br><span class="line">    callback.bind(thisArgs);</span><br><span class="line">    <span class="function"><span class="title">for</span>(<span class="params"><span class="keyword">let</span> index = <span class="number">0</span>; index &lt; len; index++</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">const</span> element = array[index];</span><br><span class="line">        <span class="function"><span class="title">if</span>(<span class="params">callback(element, index, array)</span>)</span>&#123;</span><br><span class="line">            ans[index] = array[index];    </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-08-29T00:00:00+08:00"
-              content="2020-08-29">
-          08-29
-        </time>
-      </div>
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/JavaScript-Array/" rel="tag"><i class="fa fa-tag"></i> JavaScript Array</a>
+          </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/08/29/parral-and-concurrency/" itemprop="url">
-            <span itemprop="name">并行(parallelism)与并发(concurrency)</span>
-          </a>
-      </div>
+        
 
-    </header>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/01/word-break2/" rel="prev" title="word-break2">
+      <i class="fa fa-chevron-left"></i> word-break2
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/22/horizontal-vertical-center/" rel="next" title="horizontal-vertical-center">
+      horizontal-vertical-center <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
   </article>
-
-    </div>
-  </div>
   
   
-  
-
   
 
 

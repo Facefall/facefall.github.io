@@ -150,6 +150,207 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://facefall.github.io/2020/11/22/js-new-keyword/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="CJY">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/22/js-new-keyword/" class="post-title-link" itemprop="url">js-new-keyword</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-11-22 16:07:08 / Modified: 16:22:17" itemprop="dateCreated datePublished" datetime="2020-11-22T16:07:08+08:00">2020-11-22</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Js-new-一个对象的原理"><a href="#Js-new-一个对象的原理" class="headerlink" title="Js new 一个对象的原理"></a>Js new 一个对象的原理</h1><p>1.创建一个空对象，作为将要返回的对象实例。</p>
+<p>2.将这个空对象的原型，指向构造函数的prototype属性。</p>
+<p>3.将这个空对象赋值给函数内部的this关键字。</p>
+<p>4.开始执行构造函数内部的代码。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_new</span>(<span class="params">constructor, params</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> args = [].slice.call(<span class="built_in">arguments</span>);</span><br><span class="line">    <span class="keyword">let</span> obj = <span class="built_in">Object</span>.create(<span class="title">constructor</span>.<span class="title">prototype</span>);<span class="comment">//1 2</span></span><br><span class="line">    <span class="keyword">let</span> res = <span class="title">constructor</span>.<span class="title">apply</span>(<span class="params">obj, ...params</span>);<span class="comment">//3 函数内部的this = obj 4</span></span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">typeof</span> res === <span class="string">&#x27;object&#x27;</span> &amp;&amp; res !== <span class="literal">null</span>) ? res : obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="ES6-new-target"><a href="#ES6-new-target" class="headerlink" title="ES6 - new.target"></a>ES6 - new.target</h2><p>new.target属性允许你检测函数或构造方法是否是通过new运算符被调用的。在通过new运算符被初始化的函数或构造方法中，new.target返回一个指向构造方法或函数的引用。在普通的函数调用中，new.target 的值是undefined。</p>
+<h3 id="函数调用中的-new-target"><a href="#函数调用中的-new-target" class="headerlink" title="函数调用中的 new.target"></a>函数调用中的 new.target</h3><p>在普通的函数调用中（和作为构造函数来调用相对），new.target的值是undefined。这使得你可以检测一个函数是否是作为构造函数通过new被调用的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="keyword">new</span>.target) <span class="keyword">throw</span> <span class="string">&quot;Foo() must be called with new&quot;</span>;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&quot;Foo instantiated with new&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Foo(); <span class="comment">// throws &quot;Foo() must be called with new&quot;</span></span><br><span class="line"><span class="keyword">new</span> Foo(); <span class="comment">// logs &quot;Foo instantiated with new&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="构造方法中的-new-target"><a href="#构造方法中的-new-target" class="headerlink" title="构造方法中的 new.target"></a>构造方法中的 new.target</h3><p>在类的构造方法中，new.target指向直接被new执行的构造函数。并且当一个父类构造方法在子类构造方法中被调用时，情况与之相同。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">new</span>.target.name);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="keyword">extends</span> <span class="title">A</span> </span>&#123; <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123; <span class="built_in">super</span>(); &#125; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> A(); <span class="comment">// logs &quot;A&quot;</span></span><br><span class="line"><span class="keyword">var</span> b = <span class="keyword">new</span> B(); <span class="comment">// logs &quot;B&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> </span>&#123; <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123; <span class="built_in">console</span>.log(<span class="keyword">new</span>.target); &#125; &#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span> <span class="keyword">extends</span> <span class="title">C</span> </span>&#123; <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123; <span class="built_in">super</span>(); &#125; &#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">var</span> c = <span class="keyword">new</span> C(); <span class="comment">// logs class C&#123;constructor()&#123;console.log(new.target);&#125;&#125;</span></span><br><span class="line"><span class="keyword">var</span> d = <span class="keyword">new</span> D(); <span class="comment">// logs class D extends C&#123;constructor()&#123;super();&#125;&#125;</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://facefall.github.io/2020/11/22/horizontal-vertical-center/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="CJY">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/22/horizontal-vertical-center/" class="post-title-link" itemprop="url">horizontal-vertical-center</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-11-22 10:40:39 / Modified: 10:53:43" itemprop="dateCreated datePublished" datetime="2020-11-22T10:40:39+08:00">2020-11-22</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="三种方法-实现垂直水平居中"><a href="#三种方法-实现垂直水平居中" class="headerlink" title="三种方法 实现垂直水平居中"></a>三种方法 实现垂直水平居中</h1><p>1：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">position</span><span class="selector-pseudo">:absolute</span>;</span><br><span class="line"><span class="selector-tag">left</span><span class="selector-pseudo">:0</span>;</span><br><span class="line"><span class="selector-tag">right</span><span class="selector-pseudo">:0</span>;</span><br><span class="line"><span class="selector-tag">top</span><span class="selector-pseudo">:0</span>;</span><br><span class="line"><span class="selector-tag">bottom</span><span class="selector-pseudo">:0</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>2:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">transform</span>: <span class="selector-tag">translate</span>(<span class="selector-tag">-50</span>%, <span class="selector-tag">-50</span>%);</span><br></pre></td></tr></table></figure>
+<p>使用translate时需要注意位移量的百分比是相对元素自身宽高来计算的。</p>
+<p>translate有一个最常见的应用，即当元素宽度高度不固定时，使用translate可实现水平以及垂直方向的居中。<br>元素宽度未知的情况也适用</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dom结构</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;box&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;item&quot;</span>&gt;</span>center<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>样式设计</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="selector-class">.box</span>&#123;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.item</span>&#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">50px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#fb3</span>;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">50%</span>; <span class="comment">/*相对于父级*/</span></span><br><span class="line">    <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">transform</span>: <span class="built_in">translate</span>(-<span class="number">50%</span>, -<span class="number">50%</span>); <span class="comment">/*相对自身*/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3:<br>flex</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">display</span>: <span class="selector-tag">flex</span>; </span><br><span class="line"><span class="selector-tag">justify-content</span><span class="selector-pseudo">:center</span>; </span><br><span class="line"><span class="selector-tag">align-items</span><span class="selector-pseudo">:center</span>;</span><br></pre></td></tr></table></figure>
+<p>4：不知道自己高度和父容器高度的情况下</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">parentElement</span>&#123;</span><br><span class="line">       <span class="attribute">position</span>:relative;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">childElement</span>&#123;</span><br><span class="line">       <span class="attribute">position</span>: absolute;</span><br><span class="line">       <span class="attribute">top</span>: <span class="number">50%</span>;</span><br><span class="line">       <span class="attribute">transform</span>: <span class="built_in">translateY</span>(-<span class="number">50%</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://facefall.github.io/2020/11/22/array-filter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="CJY">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/22/array-filter/" class="post-title-link" itemprop="url">array-filter</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-11-22 10:30:07 / Modified: 10:36:08" itemprop="dateCreated datePublished" datetime="2020-11-22T10:30:07+08:00">2020-11-22</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.myFilter = <span class="function"><span class="keyword">function</span> (<span class="params">callback, thisArgs</span>)</span>&#123; </span><br><span class="line">    <span class="keyword">let</span> array = <span class="built_in">this</span>;</span><br><span class="line">    <span class="keyword">const</span> len = array.length;</span><br><span class="line">    <span class="keyword">let</span> ans = <span class="keyword">new</span> <span class="built_in">Array</span>(len);</span><br><span class="line">    callback.bind(thisArgs);</span><br><span class="line">    <span class="function"><span class="title">for</span>(<span class="params"><span class="keyword">let</span> index = <span class="number">0</span>; index &lt; len; index++</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">const</span> element = array[index];</span><br><span class="line">        <span class="function"><span class="title">if</span>(<span class="params">callback(element, index, array)</span>)</span>&#123;</span><br><span class="line">            ans[index] = array[index];    </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://facefall.github.io/2020/11/01/word-break2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -433,79 +634,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://facefall.github.io/2020/09/03/algorithm-fibonacci/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="CJY">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/09/03/algorithm-fibonacci/" class="post-title-link" itemprop="url">Algorithm beginner - 1.fibonacci</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-09-03 00:00:00" itemprop="dateCreated datePublished" datetime="2020-09-03T00:00:00+08:00">2020-09-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-01 10:24:03" itemprop="dateModified" datetime="2020-11-01T10:24:03+08:00">2020-11-01</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/fibonacci-JavaScript-algorithm/" itemprop="url" rel="index"><span itemprop="name">fibonacci JavaScript algorithm</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Fibonacci"><a href="#Fibonacci" class="headerlink" title="Fibonacci"></a>Fibonacci</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fibonacci = <span class="function"><span class="params">N</span> =&gt;</span>&#123;</span><br><span class="line">    <span class="function"><span class="title">if</span>(<span class="params">N === <span class="number">1</span></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">if</span>(<span class="params">N === <span class="number">0</span></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> fibonacci(N-<span class="number">1</span>) + fibonacci(N-<span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://facefall.github.io/2020/09/03/algorithm-stairecaseDP/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -563,6 +691,79 @@
           <h3 id="DP-楼梯问题"><a href="#DP-楼梯问题" class="headerlink" title="DP 楼梯问题"></a>DP 楼梯问题</h3><p>每次可以上1个台阶，或者2个台阶</p>
 <p>给一个N，问到达N阶台阶有几种方法。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> StaireCaseDP = <span class="function"><span class="params">N</span> =&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> method_A = <span class="function">() =&gt;</span> <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">const</span> method_B = <span class="function">() =&gt;</span> <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">let</span> DP = <span class="keyword">new</span> <span class="built_in">Array</span>(N.length+<span class="number">1</span>);</span><br><span class="line">    DP[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">    DP[<span class="number">1</span>] = <span class="number">1</span>;<span class="comment">// method_A()</span></span><br><span class="line">    DP[<span class="number">2</span>] = <span class="number">2</span>;<span class="comment">// method_B or method_A + method_A</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">for</span>(<span class="params"><span class="keyword">let</span> i = <span class="number">3</span>; i &lt;= N ; i++</span>)</span>&#123;</span><br><span class="line">        DP[i] = DP[i-<span class="number">1</span>] + DP[i-<span class="number">2</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> DP[N];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://facefall.github.io/2020/09/03/algorithm-fibonacci/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="CJY">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/03/algorithm-fibonacci/" class="post-title-link" itemprop="url">Algorithm beginner - 1.fibonacci</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-09-03 00:00:00" itemprop="dateCreated datePublished" datetime="2020-09-03T00:00:00+08:00">2020-09-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-11-01 10:24:03" itemprop="dateModified" datetime="2020-11-01T10:24:03+08:00">2020-11-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/fibonacci-JavaScript-algorithm/" itemprop="url" rel="index"><span itemprop="name">fibonacci JavaScript algorithm</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Fibonacci"><a href="#Fibonacci" class="headerlink" title="Fibonacci"></a>Fibonacci</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fibonacci = <span class="function"><span class="params">N</span> =&gt;</span>&#123;</span><br><span class="line">    <span class="function"><span class="title">if</span>(<span class="params">N === <span class="number">1</span></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">if</span>(<span class="params">N === <span class="number">0</span></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> fibonacci(N-<span class="number">1</span>) + fibonacci(N-<span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -683,233 +884,6 @@ node1 <- node2 <- node3       node4 -> node5 -> node6
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://facefall.github.io/2020/08/30/LRU/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="CJY">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/30/LRU/" class="post-title-link" itemprop="url">LRU cache Implementation！</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-08-30 00:00:00" itemprop="dateCreated datePublished" datetime="2020-08-30T00:00:00+08:00">2020-08-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-01 10:24:03" itemprop="dateModified" datetime="2020-11-01T10:24:03+08:00">2020-11-01</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LRU-JavaScript-cache/" itemprop="url" rel="index"><span itemprop="name">LRU JavaScript cache</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Using-JavaScript-to-implement-LRU-Least-Recent-Used-algorithm"><a href="#Using-JavaScript-to-implement-LRU-Least-Recent-Used-algorithm" class="headerlink" title="Using JavaScript to implement LRU (Least Recent Used) algorithm"></a>Using JavaScript to implement LRU (Least Recent Used) algorithm</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 可以优化的地方：使用数据结构: queue，stack或者linklist</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">LRUCache</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">capacity</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.capacity = capacity;</span><br><span class="line">        <span class="built_in">this</span>.keys = [],<span class="built_in">this</span>.values = [];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">get</span>(<span class="params">key</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> index = -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">let</span> target = <span class="built_in">this</span>.keys.find(<span class="function">(<span class="params">item</span>)=&gt;</span>&#123;</span><br><span class="line">            index++;</span><br><span class="line">            <span class="keyword">return</span> item === key;</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="function"><span class="title">if</span>(<span class="params">target</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">let</span> objValue = <span class="built_in">this</span>.values.splice(index,<span class="number">1</span>);</span><br><span class="line">            <span class="built_in">this</span>.keys.splice(index,<span class="number">1</span>);</span><br><span class="line">            <span class="built_in">this</span>.keys = [target].concat(<span class="built_in">this</span>.keys);</span><br><span class="line">            <span class="built_in">this</span>.values = objValue.concat(<span class="built_in">this</span>.values);</span><br><span class="line">            <span class="keyword">return</span> objValue[<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;    </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">put</span>(<span class="params">key,value</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> index = -<span class="number">1</span>;</span><br><span class="line">        <span class="function"><span class="title">for</span>(<span class="params"><span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="built_in">this</span>.keys.length; i++</span>)</span>&#123;</span><br><span class="line">            <span class="function"><span class="title">if</span>(<span class="params"><span class="built_in">this</span>.keys[i] === key</span>)</span>&#123;</span><br><span class="line">                index = i;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="title">if</span>(<span class="params">index === -<span class="number">1</span></span>)</span>&#123;</span><br><span class="line">            <span class="function"><span class="title">if</span>(<span class="params"><span class="built_in">this</span>.capacity &lt;= <span class="built_in">this</span>.keys.length</span>)</span>&#123;</span><br><span class="line">                <span class="built_in">this</span>.keys.length--;</span><br><span class="line">                <span class="built_in">this</span>.values.length--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">this</span>.keys = [key].concat(<span class="built_in">this</span>.keys);</span><br><span class="line">            <span class="built_in">this</span>.values = [value].concat(<span class="built_in">this</span>.values);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="built_in">this</span>.values.splice(index,<span class="number">1</span>);</span><br><span class="line">            <span class="built_in">this</span>.keys.splice(index,<span class="number">1</span>);</span><br><span class="line">            <span class="built_in">this</span>.values = [value].concat(<span class="built_in">this</span>.values);</span><br><span class="line">            <span class="built_in">this</span>.keys = [key].concat(<span class="built_in">this</span>.keys);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://facefall.github.io/2020/08/29/LinkList/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="CJY">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/29/LinkList/" class="post-title-link" itemprop="url">Data Structure - LinkList Implementation！</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-08-29 00:00:00" itemprop="dateCreated datePublished" datetime="2020-08-29T00:00:00+08:00">2020-08-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-01 10:23:38" itemprop="dateModified" datetime="2020-11-01T10:23:38+08:00">2020-11-01</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LinkList-DataStructure-JavaScript/" itemprop="url" rel="index"><span itemprop="name">LinkList DataStructure JavaScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="LinkList-structure"><a href="#LinkList-structure" class="headerlink" title="LinkList structure"></a>LinkList structure</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> LinkListNode <span class="keyword">from</span> <span class="string">&quot;./LinkListNode&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">LinkList</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.head = <span class="literal">null</span>;</span><br><span class="line">        <span class="built_in">this</span>.tail = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">append</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">const</span> newNode = <span class="keyword">new</span> LinkListNode(value);</span><br><span class="line">        <span class="comment">// this.head = newNode;</span></span><br><span class="line">        <span class="function"><span class="title">if</span>(<span class="params">!<span class="built_in">this</span>.head</span>)</span>&#123;</span><br><span class="line">            <span class="built_in">this</span>.head = newNode;</span><br><span class="line">            <span class="built_in">this</span>.tail = newNode;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">this</span>.tail.next = newNode;</span><br><span class="line">        <span class="built_in">this</span>.tail = newNode;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">deleteTail</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">const</span> deletedTailItem = <span class="built_in">this</span>.tail;</span><br><span class="line">        <span class="keyword">let</span> beforeTail = <span class="built_in">this</span>.head;</span><br><span class="line">        <span class="function"><span class="title">if</span>(<span class="params">!<span class="built_in">this</span>.head</span>)</span>&#123;</span><br><span class="line">            <span class="comment">// throw new Error(&quot;linklist is empty ,can not delete. &quot;);</span></span><br><span class="line">            <span class="built_in">console</span>.warn(<span class="string">&quot;linklist is empty.&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="title">if</span>(<span class="params"><span class="built_in">this</span>.head === <span class="built_in">this</span>.tail</span>)</span>&#123;</span><br><span class="line">            <span class="built_in">this</span>.head = <span class="literal">null</span>;</span><br><span class="line">            <span class="built_in">this</span>.tail = <span class="literal">null</span>;</span><br><span class="line">            <span class="keyword">return</span> deletedTailItem;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="title">while</span>(<span class="params"> beforeTail.next !== deletedTailItem</span>)</span>&#123;</span><br><span class="line">            beforeTail = beforeTail.next;</span><br><span class="line">        &#125;</span><br><span class="line">        beforeTail.next = <span class="literal">null</span>;</span><br><span class="line">        <span class="built_in">this</span>.tail = beforeTail;</span><br><span class="line">        <span class="keyword">return</span> deletedTailItem;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">deleteHead</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">const</span> deletedHeadItem = <span class="built_in">this</span>.head;</span><br><span class="line">        <span class="function"><span class="title">if</span>(<span class="params">!<span class="built_in">this</span>.head</span>)</span>&#123;</span><br><span class="line">            <span class="comment">// throw new Error(&quot;linklist is empty, can not delete.&quot;);</span></span><br><span class="line">            <span class="built_in">console</span>.warn(<span class="string">&quot;linklist is empty.&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="title">if</span>(<span class="params"><span class="built_in">this</span>.head.next</span>)</span>&#123;</span><br><span class="line">            <span class="built_in">this</span>.head = <span class="built_in">this</span>.head.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="built_in">this</span>.head = <span class="literal">null</span>;</span><br><span class="line">            <span class="built_in">this</span>.tail = <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> deletedHeadItem;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">find</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">        <span class="function"><span class="title">if</span>(<span class="params">!<span class="built_in">this</span>.head</span>)</span>&#123;</span><br><span class="line">            <span class="comment">// throw new Error(&quot;linklist is empty&quot;);</span></span><br><span class="line">            <span class="built_in">console</span>.warn(<span class="string">&quot;linklist is empty.&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">let</span> currentNode = <span class="built_in">this</span>.head;</span><br><span class="line">        <span class="function"><span class="title">while</span>(<span class="params">!!currentNode</span>)</span>&#123;</span><br><span class="line">            <span class="function"><span class="title">if</span>(<span class="params">currentNode.value === value</span>)</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> currentNode;</span><br><span class="line">            &#125;</span><br><span class="line">            currentNode = currentNode.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;not find!&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">fromArray</span>(<span class="params">array</span>)</span>&#123;</span><br><span class="line">        array.forEach(<span class="function">(<span class="params">item</span>)=&gt;</span>&#123;</span><br><span class="line">            <span class="built_in">this</span>.append(item);</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">toArray</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> nodes = [];</span><br><span class="line">        <span class="keyword">let</span> currentNode = <span class="built_in">this</span>.head;</span><br><span class="line">        <span class="function"><span class="title">while</span>(<span class="params">currentNode</span>)</span>&#123;</span><br><span class="line">            nodes.push(currentNode);</span><br><span class="line">            currentNode = currentNode.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> nodes;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">toString</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.toArray().map(<span class="function">(<span class="params">node</span>) =&gt;</span> node.value).toString()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">reverse</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="function"><span class="title">if</span>(<span class="params">!<span class="built_in">this</span>.head</span>)</span>&#123;</span><br><span class="line">            <span class="comment">// throw new Error(&quot;linklist is empty&quot;);</span></span><br><span class="line">            <span class="built_in">console</span>.warn(<span class="string">&quot;linklist is empty.&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>.head;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">let</span> currentNode = <span class="built_in">this</span>.head;</span><br><span class="line">        <span class="keyword">let</span> preNode = <span class="literal">null</span>,nexNode = <span class="literal">null</span>;</span><br><span class="line">        <span class="function"><span class="title">while</span>(<span class="params">currentNode</span>)</span>&#123;</span><br><span class="line">            nexNode = currentNode.next;</span><br><span class="line">            currentNode.next = preNode;</span><br><span class="line">            preNode = currentNode;</span><br><span class="line">            currentNode = nexNode;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">this</span>.tail = <span class="built_in">this</span>.head;</span><br><span class="line">        <span class="built_in">this</span>.head = preNode;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">traverse</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="function"><span class="title">while</span>(<span class="params">!<span class="built_in">this</span>.head</span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;<span class="built_in">this</span>.head.value&#125;</span>`</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="LinkListNode-structure"><a href="#LinkListNode-structure" class="headerlink" title="LinkListNode structure"></a>LinkListNode structure</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">LinkListNode</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">value,next = <span class="literal">null</span></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.value = value;</span><br><span class="line">        <span class="built_in">this</span>.next = next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://facefall.github.io/2020/08/29/parral-and-concurrency/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="CJY">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/29/parral-and-concurrency/" class="post-title-link" itemprop="url">并行(parallelism)与并发(concurrency)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-08-29 00:00:00" itemprop="dateCreated datePublished" datetime="2020-08-29T00:00:00+08:00">2020-08-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-01 10:18:35" itemprop="dateModified" datetime="2020-11-01T10:18:35+08:00">2020-11-01</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/process-OS/" itemprop="url" rel="index"><span itemprop="name">process OS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="并行与并发到底有什么区别？"><a href="#并行与并发到底有什么区别？" class="headerlink" title="并行与并发到底有什么区别？"></a>并行与并发到底有什么区别？</h2><blockquote>
-<p><strong>Concurrency</strong> is when two or more tasks can start, run, and complete in overlapping time periods. It doesn’t necessarily mean they’ll ever both be running at the same instant. For example, multitasking on a single-core machine.</p>
-</blockquote>
-<blockquote>
-<p><strong>Parallelism</strong> is when tasks literally run at the same time, e.g., on a multicore processor.</p>
-</blockquote>
-<img src="https://facefall.github.io/myblog/assets/img/C-P.png" >
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -979,7 +953,7 @@ node1 <- node2 <- node3       node4 -> node5 -> node6
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -988,7 +962,7 @@ node1 <- node2 <- node3       node4 -> node5 -> node6
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
