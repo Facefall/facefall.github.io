@@ -175,7 +175,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-11-22 16:07:08 / Modified: 16:46:19" itemprop="dateCreated datePublished" datetime="2020-11-22T16:07:08+08:00">2020-11-22</time>
+              <time title="Created: 2020-11-22 16:07:08 / Modified: 16:50:53" itemprop="dateCreated datePublished" datetime="2020-11-22T16:07:08+08:00">2020-11-22</time>
             </span>
 
           
@@ -189,11 +189,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Js-new-一个对象的原理"><a href="#Js-new-一个对象的原理" class="headerlink" title="Js new 一个对象的原理"></a>Js new 一个对象的原理</h1><p>####1.创建一个空对象，作为将要返回的对象实例。</p>
-<p>####2.将这个空对象的原型，指向构造函数的prototype属性。</p>
-<p>####3.将这个空对象赋值给函数内部的this关键字。</p>
-<p>####4.开始执行构造函数内部的代码。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_new</span>(<span class="params">constructor, params</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> args = [].slice.call(<span class="built_in">arguments</span>);</span><br><span class="line">    <span class="keyword">let</span> obj = <span class="built_in">Object</span>.create(<span class="title">constructor</span>.<span class="title">prototype</span>);<span class="comment">//1 2</span></span><br><span class="line">    <span class="keyword">let</span> res = <span class="title">constructor</span>.<span class="title">apply</span>(<span class="params">obj, ...params</span>);<span class="comment">//3 函数内部的this = obj 4</span></span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">typeof</span> res === <span class="string">&#x27;object&#x27;</span> &amp;&amp; res !== <span class="literal">null</span>) ? res : obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h1 id="Js-new-一个对象的原理"><a href="#Js-new-一个对象的原理" class="headerlink" title="Js new 一个对象的原理"></a>Js new 一个对象的原理</h1><h4 id="1-创建一个空对象，作为将要返回的对象实例。"><a href="#1-创建一个空对象，作为将要返回的对象实例。" class="headerlink" title="1.创建一个空对象，作为将要返回的对象实例。"></a>1.创建一个空对象，作为将要返回的对象实例。</h4><h4 id="2-将这个空对象的原型，指向构造函数的prototype属性。"><a href="#2-将这个空对象的原型，指向构造函数的prototype属性。" class="headerlink" title="2.将这个空对象的原型，指向构造函数的prototype属性。"></a>2.将这个空对象的原型，指向构造函数的prototype属性。</h4><h4 id="3-将这个空对象赋值给函数内部的this关键字。"><a href="#3-将这个空对象赋值给函数内部的this关键字。" class="headerlink" title="3.将这个空对象赋值给函数内部的this关键字。"></a>3.将这个空对象赋值给函数内部的this关键字。</h4><h4 id="4-开始执行构造函数内部的代码。"><a href="#4-开始执行构造函数内部的代码。" class="headerlink" title="4.开始执行构造函数内部的代码。"></a>4.开始执行构造函数内部的代码。</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_new</span>(<span class="params">constructor, params</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> args = [].slice.call(<span class="built_in">arguments</span>);</span><br><span class="line">    <span class="keyword">let</span> obj = <span class="built_in">Object</span>.create(<span class="title">constructor</span>.<span class="title">prototype</span>);<span class="comment">//1 2</span></span><br><span class="line">    <span class="keyword">let</span> res = <span class="title">constructor</span>.<span class="title">apply</span>(<span class="params">obj, ...params</span>);<span class="comment">//3 函数内部的this = obj 4</span></span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">typeof</span> res === <span class="string">&#x27;object&#x27;</span> &amp;&amp; res !== <span class="literal">null</span>) ? res : obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <hr>
 <h2 id="ES6-new-target"><a href="#ES6-new-target" class="headerlink" title="ES6 - new.target"></a>ES6 - new.target</h2><p>new.target属性允许你检测函数或构造方法是否是通过new运算符被调用的。在通过new运算符被初始化的函数或构造方法中，new.target返回一个指向构造方法或函数的引用。在普通的函数调用中，new.target 的值是undefined。</p>
 <h4 id="函数调用中的-new-target"><a href="#函数调用中的-new-target" class="headerlink" title="函数调用中的 new.target"></a>函数调用中的 new.target</h4><p>在普通的函数调用中（和作为构造函数来调用相对），new.target的值是undefined。这使得你可以检测一个函数是否是作为构造函数通过new被调用的。</p>
@@ -245,7 +241,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-11-22 10:40:39 / Modified: 16:48:09" itemprop="dateCreated datePublished" datetime="2020-11-22T10:40:39+08:00">2020-11-22</time>
+              <time title="Created: 2020-11-22 10:40:39 / Modified: 16:50:53" itemprop="dateCreated datePublished" datetime="2020-11-22T10:40:39+08:00">2020-11-22</time>
             </span>
 
           
@@ -259,19 +255,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="三种方法-实现垂直水平居中"><a href="#三种方法-实现垂直水平居中" class="headerlink" title="三种方法 实现垂直水平居中"></a>三种方法 实现垂直水平居中</h1><p>##1 使用绝对定位，利用margin auto</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">position</span><span class="selector-pseudo">:absolute</span>;</span><br><span class="line"><span class="selector-tag">left</span><span class="selector-pseudo">:0</span>;</span><br><span class="line"><span class="selector-tag">right</span><span class="selector-pseudo">:0</span>;</span><br><span class="line"><span class="selector-tag">top</span><span class="selector-pseudo">:0</span>;</span><br><span class="line"><span class="selector-tag">bottom</span><span class="selector-pseudo">:0</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <h1 id="三种方法-实现垂直水平居中"><a href="#三种方法-实现垂直水平居中" class="headerlink" title="三种方法 实现垂直水平居中"></a>三种方法 实现垂直水平居中</h1><h2 id="1-使用绝对定位，利用margin-auto"><a href="#1-使用绝对定位，利用margin-auto" class="headerlink" title="1 使用绝对定位，利用margin auto"></a>1 使用绝对定位，利用margin auto</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">position</span><span class="selector-pseudo">:absolute</span>;</span><br><span class="line"><span class="selector-tag">left</span><span class="selector-pseudo">:0</span>;</span><br><span class="line"><span class="selector-tag">right</span><span class="selector-pseudo">:0</span>;</span><br><span class="line"><span class="selector-tag">top</span><span class="selector-pseudo">:0</span>;</span><br><span class="line"><span class="selector-tag">bottom</span><span class="selector-pseudo">:0</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>##2 使用transform</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">transform</span>: <span class="selector-tag">translate</span>(<span class="selector-tag">-50</span>%, <span class="selector-tag">-50</span>%);</span><br></pre></td></tr></table></figure>
+<h2 id="2-使用transform"><a href="#2-使用transform" class="headerlink" title="2 使用transform"></a>2 使用transform</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">transform</span>: <span class="selector-tag">translate</span>(<span class="selector-tag">-50</span>%, <span class="selector-tag">-50</span>%);</span><br></pre></td></tr></table></figure>
 <p>使用translate时需要注意位移量的百分比是相对元素自身宽高来计算的。</p>
 <p>translate有一个最常见的应用，即当元素宽度高度不固定时，使用translate可实现水平以及垂直方向的居中。<br>元素宽度未知的情况也适用</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dom结构</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;box&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;item&quot;</span>&gt;</span>center<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>样式设计</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="selector-class">.box</span>&#123;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.item</span>&#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">50px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#fb3</span>;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">50%</span>; <span class="comment">/*相对于父级*/</span></span><br><span class="line">    <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">transform</span>: <span class="built_in">translate</span>(-<span class="number">50%</span>, -<span class="number">50%</span>); <span class="comment">/*相对自身*/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>##3 使用flex</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">display</span>: <span class="selector-tag">flex</span>; </span><br><span class="line"><span class="selector-tag">justify-content</span><span class="selector-pseudo">:center</span>; </span><br><span class="line"><span class="selector-tag">align-items</span><span class="selector-pseudo">:center</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="3-使用flex"><a href="#3-使用flex" class="headerlink" title="3 使用flex"></a>3 使用flex</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">display</span>: <span class="selector-tag">flex</span>; </span><br><span class="line"><span class="selector-tag">justify-content</span><span class="selector-pseudo">:center</span>; </span><br><span class="line"><span class="selector-tag">align-items</span><span class="selector-pseudo">:center</span>;</span><br></pre></td></tr></table></figure>
 
 <p>在不知道自己高度和父容器高度的情况下，可以通过定位配合translate实现</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">parentElement</span>&#123;</span><br><span class="line">       <span class="attribute">position</span>:relative;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">childElement</span>&#123;</span><br><span class="line">       <span class="attribute">position</span>: absolute;</span><br><span class="line">       <span class="attribute">top</span>: <span class="number">50%</span>;</span><br><span class="line">       left：50%;</span><br><span class="line">       <span class="selector-tag">transform</span>: <span class="selector-tag">translateY</span>(<span class="selector-tag">-50</span>%);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -563,79 +556,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://facefall.github.io/2020/09/03/algorithm-BinarySearch/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="CJY">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/09/03/algorithm-BinarySearch/" class="post-title-link" itemprop="url">Algorithm beginner - 2.BinarySearch</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-09-03 00:00:00" itemprop="dateCreated datePublished" datetime="2020-09-03T00:00:00+08:00">2020-09-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-01 10:24:03" itemprop="dateModified" datetime="2020-11-01T10:24:03+08:00">2020-11-01</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/binary-JavaScript-algorithm-search/" itemprop="url" rel="index"><span itemprop="name">binary JavaScript algorithm search</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="BinarySearch"><a href="#BinarySearch" class="headerlink" title="BinarySearch"></a>BinarySearch</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> binarySearch = <span class="function">(<span class="params">SortedArray,target</span>) =&gt;</span>&#123;</span><br><span class="line">   <span class="keyword">let</span> startIndex = <span class="number">0</span>,endIndex = SortedArray.length-<span class="number">1</span>;</span><br><span class="line">   <span class="keyword">let</span> midIndex = <span class="number">0</span>;</span><br><span class="line">   <span class="function"><span class="title">while</span>(<span class="params">startIndex &lt;= endIndex</span>)</span>&#123;</span><br><span class="line">       midIndex = startIndex + (<span class="built_in">Math</span>.floor( (endIndex - startIndex)/<span class="number">2</span> ));</span><br><span class="line">       <span class="function"><span class="title">if</span>(<span class="params">SortedArray[midIndex] === target</span>)</span>&#123;</span><br><span class="line">           <span class="keyword">return</span> midIndex;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="function"><span class="title">if</span>(<span class="params">SortedArray[midIndex] &lt; target</span>)</span>&#123;</span><br><span class="line">           startIndex = midIndex + <span class="number">1</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="function"><span class="title">if</span>(<span class="params">SortedArray[midIndex] &gt; target</span>)</span>&#123;</span><br><span class="line">           endIndex = midIndex - <span class="number">1</span>;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://facefall.github.io/2020/09/03/algorithm-fibonacci/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -766,6 +686,79 @@
           <h3 id="DP-楼梯问题"><a href="#DP-楼梯问题" class="headerlink" title="DP 楼梯问题"></a>DP 楼梯问题</h3><p>每次可以上1个台阶，或者2个台阶</p>
 <p>给一个N，问到达N阶台阶有几种方法。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> StaireCaseDP = <span class="function"><span class="params">N</span> =&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> method_A = <span class="function">() =&gt;</span> <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">const</span> method_B = <span class="function">() =&gt;</span> <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">let</span> DP = <span class="keyword">new</span> <span class="built_in">Array</span>(N.length+<span class="number">1</span>);</span><br><span class="line">    DP[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">    DP[<span class="number">1</span>] = <span class="number">1</span>;<span class="comment">// method_A()</span></span><br><span class="line">    DP[<span class="number">2</span>] = <span class="number">2</span>;<span class="comment">// method_B or method_A + method_A</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">for</span>(<span class="params"><span class="keyword">let</span> i = <span class="number">3</span>; i &lt;= N ; i++</span>)</span>&#123;</span><br><span class="line">        DP[i] = DP[i-<span class="number">1</span>] + DP[i-<span class="number">2</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> DP[N];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://facefall.github.io/2020/09/03/algorithm-BinarySearch/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="CJY">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/03/algorithm-BinarySearch/" class="post-title-link" itemprop="url">Algorithm beginner - 2.BinarySearch</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-09-03 00:00:00" itemprop="dateCreated datePublished" datetime="2020-09-03T00:00:00+08:00">2020-09-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-11-01 10:24:03" itemprop="dateModified" datetime="2020-11-01T10:24:03+08:00">2020-11-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/binary-JavaScript-algorithm-search/" itemprop="url" rel="index"><span itemprop="name">binary JavaScript algorithm search</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="BinarySearch"><a href="#BinarySearch" class="headerlink" title="BinarySearch"></a>BinarySearch</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> binarySearch = <span class="function">(<span class="params">SortedArray,target</span>) =&gt;</span>&#123;</span><br><span class="line">   <span class="keyword">let</span> startIndex = <span class="number">0</span>,endIndex = SortedArray.length-<span class="number">1</span>;</span><br><span class="line">   <span class="keyword">let</span> midIndex = <span class="number">0</span>;</span><br><span class="line">   <span class="function"><span class="title">while</span>(<span class="params">startIndex &lt;= endIndex</span>)</span>&#123;</span><br><span class="line">       midIndex = startIndex + (<span class="built_in">Math</span>.floor( (endIndex - startIndex)/<span class="number">2</span> ));</span><br><span class="line">       <span class="function"><span class="title">if</span>(<span class="params">SortedArray[midIndex] === target</span>)</span>&#123;</span><br><span class="line">           <span class="keyword">return</span> midIndex;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="function"><span class="title">if</span>(<span class="params">SortedArray[midIndex] &lt; target</span>)</span>&#123;</span><br><span class="line">           startIndex = midIndex + <span class="number">1</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="function"><span class="title">if</span>(<span class="params">SortedArray[midIndex] &gt; target</span>)</span>&#123;</span><br><span class="line">           endIndex = midIndex - <span class="number">1</span>;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
 
