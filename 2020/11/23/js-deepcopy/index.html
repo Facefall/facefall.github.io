@@ -20,15 +20,19 @@
     var CONFIG = {"hostname":"facefall.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://facefall.github.io/categories/LinkList-DataStructure-JavaScript/index.html">
+  <meta name="description" content="Two Implementations of JavaScript Object Deep CopyES5:123456789101112131415161718192021function copyObject(obj)&amp;#123;    var copy &#x3D; Object.create(Object.getPrototypeOf(obj));    copyOwnPropritiesFrom(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js-deepcopy">
+<meta property="og:url" content="https://facefall.github.io/2020/11/23/js-deepcopy/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Two Implementations of JavaScript Object Deep CopyES5:123456789101112131415161718192021function copyObject(obj)&amp;#123;    var copy &#x3D; Object.create(Object.getPrototypeOf(obj));    copyOwnPropritiesFrom(">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-11-23T09:23:28.000Z">
+<meta property="article:modified_time" content="2020-11-23T09:30:45.216Z">
 <meta property="article:author" content="CJY">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://facefall.github.io/categories/LinkList-DataStructure-JavaScript/">
+<link rel="canonical" href="https://facefall.github.io/2020/11/23/js-deepcopy/">
 
 
 <script id="page-configurations">
@@ -36,12 +40,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>Category: LinkList DataStructure JavaScript | Hexo</title>
+  <title>js-deepcopy | Hexo</title>
   
 
 
@@ -144,51 +148,89 @@
         <div class="content-wrap">
           
 
-          <div class="content category">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">LinkList DataStructure JavaScript
-          <small>Category</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://facefall.github.io/2020/11/23/js-deepcopy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="CJY">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          js-deepcopy
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-11-23 17:23:28 / Modified: 17:30:45" itemprop="dateCreated datePublished" datetime="2020-11-23T17:23:28+08:00">2020-11-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript-ES6-ES5-Object-deepcopy/" itemprop="url" rel="index"><span itemprop="name">JavaScript ES6 ES5 Object deepcopy</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2020</span>
+        <h1 id="Two-Implementations-of-JavaScript-Object-Deep-Copy"><a href="#Two-Implementations-of-JavaScript-Object-Deep-Copy" class="headerlink" title="Two Implementations of JavaScript Object Deep Copy"></a>Two Implementations of JavaScript Object Deep Copy</h1><h3 id="ES5"><a href="#ES5" class="headerlink" title="ES5:"></a>ES5:</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">copyObject</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> copy = <span class="built_in">Object</span>.create(<span class="built_in">Object</span>.getPrototypeOf(obj));</span><br><span class="line">    copyOwnPropritiesFrom(copy, obj);</span><br><span class="line">    <span class="keyword">return</span> copy;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">copyOwnPropritiesFrom</span>(<span class="params">target, source</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">Object</span>.getOwnPropertyNames(source).forEach(<span class="function">(<span class="params">propKeys</span>)=&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> desc  = <span class="built_in">Object</span>.getOwnPropertyDescriptor(source, propKeys);</span><br><span class="line">        <span class="built_in">Object</span>.defineProperty(target, propKeys, desc);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="string">``</span><span class="string">` </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">### ES2017</span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>javascript</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">copyObj</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Object</span>.create(</span><br><span class="line">        <span class="built_in">Object</span>.getPrototypeOf(obj),</span><br><span class="line">        <span class="built_in">Object</span>.getOwnPropertyDescriptors(obj)<span class="comment">//ES2017</span></span><br><span class="line">    )   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-08-29T00:00:00+08:00"
-              content="2020-08-29">
-          08-29
-        </time>
-      </div>
+      <footer class="post-footer">
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/08/29/LinkList/" itemprop="url">
-            <span itemprop="name">Data Structure - LinkList Implementation！</span>
-          </a>
-      </div>
+        
 
-    </header>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/22/promise-implementation/" rel="prev" title="promise-implementation">
+      <i class="fa fa-chevron-left"></i> promise-implementation
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
   </article>
-
-    </div>
-  </div>
   
   
-  
-
   
 
 
@@ -241,6 +283,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Two-Implementations-of-JavaScript-Object-Deep-Copy"><span class="nav-number">1.</span> <span class="nav-text">Two Implementations of JavaScript Object Deep Copy</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ES5"><span class="nav-number">1.0.1.</span> <span class="nav-text">ES5:</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
