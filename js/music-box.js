@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function (){
         audio.setAttribute("src", musicUrl);
         musicPic.setAttribute("src", picUrl);
 
-        musicBox.style.cssText = `right:0;`;// start: right:-80px  end: right:0px
+        musicBox.style.cssText = `left:0;`;// start: right:-80px  end: right:0px
         musicBox.addEventListener("click", (e) => {
           if(audio.paused){
             //    暂停中
